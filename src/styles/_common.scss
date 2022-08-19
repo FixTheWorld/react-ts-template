@@ -1,0 +1,37 @@
+/*common classes will be used in each page*/
+#{$class-prefix}{
+    &flex-h{
+        @include display-flex(row);
+    }
+    &flex-v{
+        @include display-flex(column);
+    }
+    &flex-h-c{
+        @include flex-h-c();
+    }
+    &flex-v-c{
+        @include flex-v-c;
+    }
+    &center{
+        justify-content: center;
+        align-items: center;
+    }
+    &flex{
+        flex:1;
+    }
+    &full{
+        height: 100%;
+        width: 100%;
+    }
+    &full-w{
+        width: 100%;
+    }
+    &container{
+        
+    }
+    &padding{
+        padding: $size-sm;
+    }
+}
+
+@include generate-color-class;

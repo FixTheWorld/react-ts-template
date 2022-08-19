@@ -1,0 +1,56 @@
+/*part of styles will be used in each class*/
+@mixin display-flex($direction: row, $center-main: initial, $center-sub: initial) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $center-main;
+    align-items: $center-sub;
+}
+
+@mixin flex-h-c {
+    @include display-flex(row, center, center);
+}
+
+@mixin flex-v-c {
+    @include display-flex(column, center, center);
+}
+
+@mixin bd($direction: null, $color: $grey, $width: 1px, $style: solid) {
+    @if($direction) {
+        border-#{$direction}: $style $width $color;
+    }
+
+    @else {
+        border: $style $width $color;
+    }
+}
+
+@mixin circle($radius: 50px, $bd: null) {
+    width: $radius;
+    height: $radius;
+    border-radius: 50%;
+    overflow: hidden;
+
+    @if($bd) {
+        @include bd;
+    }
+}
+
+@mixin generate-color-class {
+    @for $i from 1 to length($map-color) {
+        $item: nth($map-color, $i);
+        $color: map-get($item, color);
+        $value: map-get($item, value);
+
+        #{$class-prefix}#{$color} {
+            color: $value;
+        }
+
+        #{$class-prefix}bg-#{$color} {
+            background-color: $value;
+        }
+
+        #{$class-prefix}bd-#{$color} {
+            @include bd(null, $value);
+        }
+    }
+}

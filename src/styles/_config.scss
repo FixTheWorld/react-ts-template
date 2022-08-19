@@ -1,0 +1,49 @@
+/*configured variables*/
+$class-prefix:'.cm-';
+$app-prefix:'.cms-';
+$minScreen:768px;
+
+/******colors*****/
+$color-1:#e6fffb;
+$color-2:#b5f5ec;
+$color-3:#87e8de;
+$color-4:#5cdbd3;
+$color-5:#36cfc9;
+$color-6:#13c2c2;
+$color-7:#08979c;
+$color-8:#006d75;
+$color-9:#00474f;
+$color-10:#002329;
+
+
+$white:#fff;
+$orange:#ff9800;
+$red:#e91e63;
+$blue:#00bcd4;
+$purple:purple;
+$grey: #9e9e9e;
+$black:#505050;
+$green:green;
+$gold:rgb(255,215,0);
+$light-green: #8ebc07;
+$light-blue:#4db798;
+$map-color:(
+        (color:blue,value:$blue),
+        (color:red,value:$red),
+        (color:grey,value:$grey),
+        (color:white,value:$white),
+        (color:green,value:$green),
+        (color:purple,value:$purple),
+        (color:black,value:$black),
+);
+
+/*font size*/
+$font-md:16px;
+$font-lg:18px;
+$font-sm:14px;
+$font-xs:12px;
+
+$size-xs:5px;
+$size-sm:10px;
+$size-md:15px;
+$size-lg:20px;
