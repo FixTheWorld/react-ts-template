@@ -8,6 +8,7 @@ const App = React.lazy(() => import("./App/"));
 const TestRedux = React.lazy(() => import("./TestRedux"));
 const Login = React.lazy(() => import("./Login/index"));
 const TestMobx = React.lazy(() => import("./TestMobx"));
+const Register = React.lazy(() => import("./Register"));
 
 function Redirect({ to }: { to: string }) {
   let navigate = useNavigate();
@@ -36,13 +37,14 @@ export default function MainRoute() {
         />
         <Route
           path="/testMobx"
-          element={<React.Suspense children={<TestMobx/>} />}
+          element={<React.Suspense children={<TestMobx />} />}
         />
       </Route>
+      <Route path="/login" element={<React.Suspense children={<Login />} />} />
       <Route
-          path="/login"
-          element={<React.Suspense children={<Login />} />}
-        />
+        path="/register"
+        element={<React.Suspense children={<Register />} />}
+      />
     </Routes>
   );
 }

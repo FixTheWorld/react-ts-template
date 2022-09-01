@@ -3,9 +3,13 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Input, Button, Avatar, Dropdown, MenuProps } from "antd";
 import { useNavigate, Outlet, Navigate } from "react-router-dom";
+import { postApi, checkLogin } from "../../common/request";
+import { mainMenu, userMenu } from "../../config/menus";
+import { logout } from "../../common/utils";
 
 function App() {
   interface ItemType {
@@ -14,29 +18,8 @@ function App() {
   }
 
   const { Header, Content, Footer, Sider } = Layout;
+  const { Search } = Input;
 
-  const items = [
-    {
-      label: "Home",
-      key: "/",
-      icon: React.createElement(UploadOutlined),
-    },
-    {
-      label: "Test Redux",
-      key: "/testRedux",
-      icon: React.createElement(UserOutlined),
-    },
-    {
-      label: "Test Hooks",
-      key: "/testHooks",
-      icon: React.createElement(VideoCameraOutlined),
-    },
-    {
-      label: "Test Mobx",
-      key: "/testMobx",
-      icon: React.createElement(VideoCameraOutlined),
-    },
-  ];
   const navigate = useNavigate();
   const linkTo = (params: ItemType) => {
     const { key } = params;
@@ -55,7 +38,25 @@ function App() {
     //   .catch((e) => {
     //     console.error(e);
     //   });
+    checkLogin();
   }, []);
+  const userMenuClick: MenuProps["onClick"] = ({ key }) => {
+    switch (key) {
+      case "logout":
+        {
+          logout();
+          navigate("/login");
+        }
+        break;
+      case "settings":
+        {
+        }
+        break;
+      default: {
+      }
+    }
+  };
+  const userMenuEle = <Menu items={userMenu} onClick={userMenuClick} />;
 
   return (
     <div className="cm-flex cm-flex-v">
@@ -74,15 +75,24 @@ function App() {
             theme="dark"
             mode="inline"
             defaultSelectedKeys={["4"]}
-            items={items}
+            items={mainMenu}
             onClick={linkTo}
           />
         </Sider>
         <Layout>
-          <Header
-            className="site-layout-sub-header-background"
-            style={{ padding: 0 }}
-          />
+          <Header className="app-header cm-padding" style={{ padding: 0 }}>
+            {/* <Search
+              enterButton={
+                <Button type="primary" icon={<SearchOutlined />}>
+                  Search
+                  <SearchOutlined />
+                </Button>
+              }
+            /> */}
+            <Dropdown overlay={userMenuEle} placement="bottomRight" arrow>
+              <Avatar size={30} icon={<UserOutlined />} />
+            </Dropdown>
+          </Header>
           <Content style={{ margin: "24px 16px 0", overflowY: "scroll" }}>
             <div
               className="site-layout-background"
@@ -109,4 +119,4 @@ function checkAuth() {
   }
 }
 
-export default checkAuth;
+export default App;

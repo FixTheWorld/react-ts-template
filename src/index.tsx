@@ -7,22 +7,26 @@ import reportWebVitals from "./reportWebVitals";
 // import store from "./store/store";
 import { Provider } from "mobx-react";
 import store from "./store/mobx";
-import { BrowserRouter } from "react-router-dom";
+import {
+  BrowserRouter,
+  unstable_HistoryRouter as HistoryRouter,
+} from "react-router-dom";
 import MainRoute from "./routes/index";
 import Loading from "./components/Loading";
+import history from "./common/history";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   // <React.StrictMode>
-  <BrowserRouter>
-    <Provider store={store}>
+  <Provider store={store}>
+    <HistoryRouter history={history}>
       <Loading>
         <MainRoute />
       </Loading>
-    </Provider>
-  </BrowserRouter>
+    </HistoryRouter>
+  </Provider>
   // </React.StrictMode>
 );
 

@@ -45,10 +45,6 @@ button {
     outline: none !important;
 }
 
-a {
-    color: #dd2c35;
-}
-
 ::-webkit-scrollbar {
     width: 3px;
     height: 3px;
@@ -66,4 +62,8 @@ a {
 
 ::-webkit-scrollbar-thumb {
     background: $color-3;
+}
+
+.ant-layout-header{
+    background: none;
 }

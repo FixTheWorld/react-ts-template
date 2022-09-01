@@ -21,3 +21,7 @@ export function getType(obj) {
     let str = Object.prototype.toString.call(obj);
     return str.slice(7, -1);
 }
+
+export function logout(){
+    localStorage.removeItem('loginToken');
+}

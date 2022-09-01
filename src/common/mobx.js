@@ -3,6 +3,8 @@ import { runInAction } from "mobx";
 export default {
     state: {
         loading: false,
+        error:false,
+        errorMessage:'',
         showLoading() {
             if (!this.loading) {
                 this.loading = true;
@@ -19,10 +21,20 @@ export default {
             //         })
             //     }
             // }, 500);
+        },
+        showError(message){
+            this.error=true;
+            this.errorMessage=message
+        },
+        hideError(){
+            this.error=false;
+            this.errorMessage='';
         }
     },
     actions: [
         'showLoading',
-        'hideLoading'
+        'hideLoading',
+        'showError',
+        'hideError'
     ]
 }

@@ -1,6 +1,7 @@
 import { Button, Checkbox, Form, Input, Layout } from "antd";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { postApi } from "../../common/request";
 import config from "../../config/index";
 
 const prefix = `${config.appClassPrefix}login-`;
@@ -10,9 +11,15 @@ const { Header, Footer, Content } = Layout;
 const Login: React.FC = () => {
   const nav = useNavigate();
   const onFinish = (values: any) => {
-    console.log("Success:", values);
-    sessionStorage.setItem("login", "true");
-    nav("/");
+    postApi("/users/login", values).then((res:any) => {
+      if (res.data.code === 0) {
+        localStorage.setItem("loginToken", res.data.data);
+        console.log('code=0');
+        nav("/");
+      }
+    }).catch(e=>{
+      console.log('error',e);
+    });
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -53,7 +60,7 @@ const Login: React.FC = () => {
             valuePropName="checked"
             wrapperCol={{ offset: 8, span: 16 }}
           >
-            <Checkbox>Remember me</Checkbox>
+            <NavLink to={"/register"}>注册账号</NavLink>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

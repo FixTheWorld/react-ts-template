@@ -26,11 +26,17 @@
     &full-w{
         width: 100%;
     }
+    &full-h{
+        height: 100%;
+    }
     &container{
         
     }
     &padding{
-        padding: $size-sm;
+        padding: $size-sm !important;
+    }
+    &margin{
+        margin: $size-sm;
     }
 }
 

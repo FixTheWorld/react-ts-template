@@ -20,7 +20,7 @@ function TestMobx() {
     console.log('use effect');
     let clean=autorun(() => {
       console.log("showName", Store.isShowName);
-      setShowName(()=>Store.isShowName);
+      setShowName(Store.isShowName);
     });
     return clean;
   },[]);
@@ -59,7 +59,7 @@ function NoState() {
   },[]);
 
   const click=()=>{
-    getApi('/api/products/list').then(res=>{
+    getApi('/products/list').then(res=>{
       console.log('res',res);
     });
   }

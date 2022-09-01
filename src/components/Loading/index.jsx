@@ -1,4 +1,4 @@
-import { Spin } from "antd";
+import { Spin, Alert } from "antd";
 import { Observer } from "mobx-react";
 import mobx from "../../store/mobx"
 import './index.scss';
@@ -13,6 +13,16 @@ export default function ({ children }) {
                                 <Spin size="large" delay={1000} />
                                 <span className="cm-white">Loading...</span>
                             </div>
+                        }
+                        {mobx.error &&
+                            <Alert
+                                message="Error"
+                                description={mobx.errorMessage}
+                                type="error"
+                                showIcon
+                                closable
+                                onClose={()=>mobx.hideError()}
+                            />
                         }
                         {children}
                     </div>
