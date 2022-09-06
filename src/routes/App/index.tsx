@@ -1,24 +1,28 @@
 import React, { useEffect } from "react";
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
-import { Layout, Menu, Input, Button, Avatar, Dropdown, MenuProps } from "antd";
-import { useNavigate, Outlet, Navigate } from "react-router-dom";
+import { UserOutlined } from "@ant-design/icons";
+import { Layout, Menu, Avatar, Dropdown, MenuProps, Space } from "antd";
+import { useNavigate, Outlet, Navigate, useLocation } from "react-router-dom";
 import { postApi, checkLogin } from "../../common/request";
 import { mainMenu, userMenu } from "../../config/menus";
 import { logout } from "../../common/utils";
+interface ItemType {
+  item: Object;
+  key: String;
+}
+const { Header, Content, Footer, Sider } = Layout;
+let path: string = "";
+const activeMenu: string[] = [];
+const userInfoStr = localStorage.getItem("userInfo");
+let username = "";
+if (userInfoStr) {
+  const userInfo = JSON.parse(userInfoStr);
+  username = userInfo.username;
+}
 
-function App() {
-  interface ItemType {
-    item: Object;
-    key: String;
-  }
-
-  const { Header, Content, Footer, Sider } = Layout;
-  const { Search } = Input;
+const App: React.FC = () => {
+  const location = useLocation();
+  const { pathname } = location;
+  const arr: string[] = pathname.split("/");
 
   const navigate = useNavigate();
   const linkTo = (params: ItemType) => {
@@ -26,20 +30,20 @@ function App() {
     navigate(key.toString());
   };
 
-  //tests proxy
+  arr.map((item, index) => {
+    if (item) {
+      path += "/" + item;
+      activeMenu.push(path);
+    }
+  });
+  //异步操作，里面的变化无法显示在
   useEffect(() => {
-    // axios
-    //   .get(
-    //     "/ajax/filterCinemas?ci=10&optimus_uuid=7C7A63F0192A11ED97E2CB3B6951DCE48B79ED1D54BC49A99EBDB23EEF27CAD8&optimus_risk_level=71&optimus_code=10"
-    //   )
-    //   .then((res) => {
-    //     console.log("res", res);
-    //   })
-    //   .catch((e) => {
-    //     console.error(e);
-    //   });
     checkLogin();
+    if (pathname === "/") {
+      navigate("/home");
+    }
   }, []);
+
   const userMenuClick: MenuProps["onClick"] = ({ key }) => {
     switch (key) {
       case "logout":
@@ -56,6 +60,7 @@ function App() {
       }
     }
   };
+
   const userMenuEle = <Menu items={userMenu} onClick={userMenuClick} />;
 
   return (
@@ -71,29 +76,26 @@ function App() {
             console.log(collapsed, type);
           }}
         >
+          <div>&nbsp;</div>
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["4"]}
+            defaultOpenKeys={activeMenu}
+            defaultSelectedKeys={activeMenu}
             items={mainMenu}
             onClick={linkTo}
           />
         </Sider>
         <Layout>
           <Header className="app-header cm-padding" style={{ padding: 0 }}>
-            {/* <Search
-              enterButton={
-                <Button type="primary" icon={<SearchOutlined />}>
-                  Search
-                  <SearchOutlined />
-                </Button>
-              }
-            /> */}
             <Dropdown overlay={userMenuEle} placement="bottomRight" arrow>
-              <Avatar size={30} icon={<UserOutlined />} />
+              <Space>
+                <span>你好，{username}</span>
+                <Avatar size={30} icon={<UserOutlined />} />
+              </Space>
             </Dropdown>
           </Header>
-          <Content style={{ margin: "24px 16px 0", overflowY: "scroll" }}>
+          <Content className="app-content">
             <div
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
@@ -108,7 +110,7 @@ function App() {
       </Layout>
     </div>
   );
-}
+};
 
 function checkAuth() {
   const login = sessionStorage.getItem("login");

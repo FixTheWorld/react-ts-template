@@ -5,10 +5,13 @@ import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 const App = React.lazy(() => import("./App/"));
-const TestRedux = React.lazy(() => import("./TestRedux"));
+const Home = React.lazy(() => import("./Home"));
 const Login = React.lazy(() => import("./Login/index"));
-const TestMobx = React.lazy(() => import("./TestMobx"));
+const Roles = React.lazy(() => import("./Users/Roles/List"));
 const Register = React.lazy(() => import("./Register"));
+const Limits = React.lazy(() => import("./Users/Limits"));
+const ArticleEdit = React.lazy(() => import("./Articles/AddOrEdit"));
+const ArticleList = React.lazy(() => import("./Articles/List"));
 
 function Redirect({ to }: { to: string }) {
   let navigate = useNavigate();
@@ -24,21 +27,19 @@ export default function MainRoute() {
   return (
     <Routes>
       <Route path="/" element={<React.Suspense children={<App />} />}>
-        <Route
-          path="/testHooks/*"
-          element={<React.Suspense children={<TestRedux />} />}
-        >
-          <Route path="useContext" element={<TestRedux />} />
-          <Route path="useMemo" element={<TestRedux />} />
+        <Route path="/users">
+          <Route path="roles" element={<Roles />} />
+          <Route path="limits" element={<Limits />} />
         </Route>
-        <Route
-          path="/testRedux"
-          element={<React.Suspense children={<TestRedux />} />}
-        />
-        <Route
-          path="/testMobx"
-          element={<React.Suspense children={<TestMobx />} />}
-        />
+        <Route path="/home" element={<React.Suspense children={<Home />} />} />
+        <Route path="/articles">
+          <Route path="list" element={<ArticleList />} />
+          <Route path="addOrEdit" element={<ArticleEdit />}>
+            {/* 可选参数 */}
+            <Route path=":articleId" element={<ArticleEdit />} />
+            <Route path="" element={<ArticleEdit />} />
+          </Route>
+        </Route>
       </Route>
       <Route path="/login" element={<React.Suspense children={<Login />} />} />
       <Route

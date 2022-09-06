@@ -10,16 +10,22 @@ const { Header, Footer, Content } = Layout;
 
 const Login: React.FC = () => {
   const nav = useNavigate();
-  const onFinish = (values: any) => {
-    postApi("/users/login", values).then((res:any) => {
-      if (res.data.code === 0) {
-        localStorage.setItem("loginToken", res.data.data);
-        console.log('code=0');
-        nav("/");
-      }
-    }).catch(e=>{
-      console.log('error',e);
-    });
+  const onFinish = (values: { username: string, password: string }) => {
+    postApi("/users/login", values)
+      .then((res: any) => {
+        console.log('login',res);
+        if (res.data.code === 0) {
+          const {username}=values;
+          const {token,user_id}=res.data.data;
+          localStorage.setItem('userInfo',JSON.stringify({username,user_id}));
+          localStorage.setItem("loginToken", token);
+          console.log("code=0");
+          nav("/");
+        }
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
   };
 
   const onFinishFailed = (errorInfo: any) => {

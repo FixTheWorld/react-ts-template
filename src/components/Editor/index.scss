@@ -1,0 +1,6 @@
+.cp-editor{
+    &-editor{
+        @include bd();
+        height: 400px !important;
+    }
+}

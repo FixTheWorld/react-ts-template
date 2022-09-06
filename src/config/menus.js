@@ -1,31 +1,32 @@
 import {
-    UploadOutlined,
+    HomeOutlined,
     UserOutlined,
-    VideoCameraOutlined,
+    ReadOutlined,
     LogoutOutlined,
     SettingOutlined
 } from "@ant-design/icons";
 export const mainMenu = [
     {
-        label: "Home",
-        key: "/",
-        icon: <UploadOutlined />,
+        label: "首页",
+        key: "/home",
+        icon: <HomeOutlined />,
     },
     {
-        label: "Test Redux",
-        key: "/testRedux",
-        icon: <UserOutlined />
-    },
-    {
-        label: "Test Hooks",
-        key: "/testHooks",
-        icon: <VideoCameraOutlined />
-    },
-    {
-        label: "Test Mobx",
-        key: "/testMobx",
-        icon: <VideoCameraOutlined />
-    },
+        label: "用户管理",
+        key: "/users",
+        icon: <UserOutlined />,
+        children: [
+            { label: '角色管理', key: '/users/roles' },
+            { label: '权限管理', key: '/users/limits' }
+        ]
+    }, {
+        label: "文章管理",
+        key: "/articles",
+        icon: <ReadOutlined />,
+        children: [
+            { label: '文章列表', key: '/articles/list' }
+        ]
+    }
 ];
 
 export const userMenu = [

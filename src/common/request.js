@@ -8,7 +8,6 @@ import { logout } from "./utils";
 axios.interceptors.request.use(
     function (config) {
         // 在发送请求之前做些什么
-        console.log("request  config", config);
         mobx.showLoading();
         const token = localStorage.getItem('loginToken');
         if (token) {
@@ -29,7 +28,6 @@ axios.interceptors.response.use(
     function (response) {
         // 2xx 范围内的状态码都会触发该函数。
         // 对响应数据做点什么
-        console.log("response  config", response);
         mobx.hideLoading();
         return response;
     },
@@ -52,6 +50,10 @@ export function getApi(url, ...params) {
 
 export function postApi(url, data, ...params) {
     return axios.post('/api' + url, data, params);
+}
+
+export function deleteApi(url, data, ...params) {
+    return axios.delete('/api' + url, data, params);
 }
 
 export function checkLogin() {

@@ -17,11 +17,15 @@ export function deepClone(source) {
     return target;
 }
 
+export function clone(data) {
+    return JSON.parse(JSON.stringify(data));
+}
+
 export function getType(obj) {
     let str = Object.prototype.toString.call(obj);
     return str.slice(7, -1);
 }
 
-export function logout(){
+export function logout() {
     localStorage.removeItem('loginToken');
 }
